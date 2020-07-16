@@ -1,17 +1,31 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Threading.Tasks;
 
 namespace CasaDoCodigo.Models
 {
-    [DataContract]
+   
     public abstract class BaseModel
     {
         [DataMember]
         public int Id { get; protected set; }
+    }
+    public class Categoria : BaseModel
+    {
+    
+        public Categoria(string nome)
+        {
+            this.Nome = nome;
+        }
+        public Categoria()
+        {
+
+        }
+        [Required]
+        public String Nome { get; set; }
+
+
     }
 
     public class Produto : BaseModel
@@ -22,18 +36,32 @@ namespace CasaDoCodigo.Models
         }
 
         [Required]
+        [DataMember]
+        public Categoria Categoria { get;  private set; }
+        [Required]
         public string Codigo { get; private set; }
         [Required]
         public string Nome { get; private set; }
         [Required]
         public decimal Preco { get; private set; }
-
-        public Produto(string codigo, string nome, decimal preco)
+        
+        public Produto( string codigo, string nome, decimal preco)
         {
+         
+            this.Codigo = codigo;
+            this.Nome = nome;
+            this.Preco = preco;   
+        }
+        public Produto(string codigo, string nome, decimal preco, Categoria categoria)
+        {
+
             this.Codigo = codigo;
             this.Nome = nome;
             this.Preco = preco;
+            this.Categoria = categoria;
         }
+
+
     }
 
     public class Cadastro : BaseModel
@@ -80,7 +108,7 @@ namespace CasaDoCodigo.Models
 
     [DataContract]
     public class ItemPedido : BaseModel
-    {   
+    {
         [Required]
         [DataMember]
         public Pedido Pedido { get; private set; }

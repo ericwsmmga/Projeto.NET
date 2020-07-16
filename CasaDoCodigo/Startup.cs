@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using CasaDoCodigo.Repositories;
+﻿using CasaDoCodigo.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace CasaDoCodigo
 {
@@ -38,6 +35,7 @@ namespace CasaDoCodigo
             services.AddTransient<IPedidoRepository, PedidoRepository>();
             services.AddTransient<ICadastroRepository, CadastroRepository>();
             services.AddTransient<IItemPedidoRepository, ItemPedidoRepository>();
+            services.AddTransient<ICategoriaRepository, CategoriaRepository>();
 
         }
 
@@ -64,10 +62,10 @@ namespace CasaDoCodigo
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Pedido}/{action=Carrossel}/{codigo?}");
+                    template: "{controller=Pedido}/{action=BuscaDeProdutos}/{codigo?}");
             });
 
-            serviceProvider.GetService<IDataService>().InicializaDB().Wait();
+        serviceProvider.GetService<IDataService>().InicializaDB().Wait();
         }
     }
 
