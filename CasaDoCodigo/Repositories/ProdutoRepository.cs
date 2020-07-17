@@ -1,4 +1,5 @@
 ﻿using CasaDoCodigo.Models;
+using CasaDoCodigo.Models.ViewModels;
 using Microsoft.CodeAnalysis.Emit;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -20,6 +21,23 @@ namespace CasaDoCodigo.Repositories
         {
             return dbSet.ToList();
         }
+
+        public async Task<BuscaProdutosViewModel> GetProdutosAsync(string pesquisa)
+        {
+            IQueryable<Produto> query = dbSet;
+
+            if (!string.IsNullOrEmpty(pesquisa))
+            {
+                query = query.Where(q => q.Nome.Contains(pesquisa));
+            }
+
+            query = query
+                .Include(prod => prod.Categoria);
+
+            return new BuscaProdutosViewModel(await query.ToListAsync(), pesquisa);
+        }
+
+        
 
         public async Task SaveProdutos(List<Livro> livros)
         {
