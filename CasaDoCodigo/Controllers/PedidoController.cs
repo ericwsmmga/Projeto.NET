@@ -45,7 +45,7 @@ namespace CasaDoCodigo.Controllers
             Pedido taskPedido = await pedidoRepository.GetPedido();
             List<ItemPedido> itens = taskPedido.Itens;
             CarrinhoViewModel carrinhoViewModel = new CarrinhoViewModel(itens);
-            return base.View(carrinhoViewModel);
+            return  base.View(carrinhoViewModel);
         }
 
         public async Task<IActionResult> Cadastro()
